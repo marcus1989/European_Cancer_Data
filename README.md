@@ -38,11 +38,6 @@ These are the investigation questions below:
     - Can we predict survival status accurately based on a patients age, gender, BMI, carncer stage, Treatment duration, smoking status, and region?
     - Which features are the strongest predictors of survival status or survival duration?
 
-5. Cost Optimization Insights
-    - What lifestyle changes (e.g., reducing BMI, quitting smoking) could significantly lower insurance costs according to the model?
-    - Can we identify "high-risk" profiles where costs are extremely high? What are their characteristics?
-
-6. What is the expected survival status for a patients in their 30-45 age group with a normal BMI across different regions?
 
 ## Hypothesis and how to validate?
 
