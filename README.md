@@ -216,7 +216,7 @@ The page "HealthcareSystemVsSurvivalStatus" fromthe dashboard give more insights
 - Stacked Bar Charts: Show survival status segmented by cancer type.
 - Correlation Heatmaps: Indicate relationships between cancer stage and survival metrics.
 
-![SurvivalVSCancerStage](reports/SurvivalVSCancerStage.png)
+[Dashboard](https://public.tableau.com/app/profile/jacob.ambat/viz/ECD_17497658574600/EuropeanCancerDashboard?publish=yes)
 
 ### 3. Evaluate Healthcare Access Impact
 **Business Requirement:** Investigate how access-related variables such as urban vs rural settings, treatment delay, and hospital type influence outcomes.
@@ -241,8 +241,55 @@ The page "HealthcareSystemVsSurvivalStatus" fromthe dashboard give more insights
 - Confusion Matrices: Help visualize model prediction effectiveness.
 - Feature Importance Bar Charts: Interpret key features influencing model decisions.
 
+![PredModelCorrMaps](reports/PredModelCorrMaps.png)
+Model Summaries
+
+* 1.  DecisionTreeClassifier  
+  
+TN: 51, FP: 49  
+FN: 48, TP: 52  
+✅ Balanced, but high false positives and false negatives.  
+* 2. RandomForestClassifier  
+
+TN: 42, FP: 58  
+FN: 47, TP: 53  
+More false positives than correct predictions of class 0. Still moderately balanced.  
+* 3. GradientBoostingClassifier  
+  
+TN: 46, FP: 54  
+FN: 52, TP: 48  
+❌ Lower TP and more FN → not predicting "Alive" class well.  
+* 4. ExtraTreesClassifier  
+  
+TN: 47, FP: 53  
+FN: 57, TP: 43  
+❌ Highest false negatives → misses a lot of actual survivors.  
+* 5. AdaBoostClassifier  
+  
+TN: 59, FP: 41  
+FN: 52, TP: 48  
+✅ Best at predicting deceased correctly (highest TN), but still many FN. 
+
+**Interpretation**   
+All models struggle with class imbalance or separating classes cleanly.  
+AdaBoostClassifier has the highest TN (best at predicting deceased).  
+DecisionTreeClassifier has the most balanced TP and TN, though performance overall is weaker (as seen in accuracy).  
+
+**Conclusion**     
+No model achieves perfect classification — likely due to overlapping features or class imbalance.  
+AdaBoost and RandomForest are slightly better for this dataset. 
+
 ![ModelMeanScoreWithStdDev](reports/ModelMeanScoreWithStdDev.png)
 ![ModelPerformances](reports/ModelPerformances.png)
+
+This summary compares the performance of five machine learning classifiers predicting cancer patient survival status.   
+Key points:
+* AdaBoostClassifier achieves the highest accuracy (53.5%) and precision (0.54), indicating it makes more correct "Alive" predictions overall.  
+* DecisionTreeClassifier has the best recall (0.52) and balanced precision, suggesting it identifies survivors slightly more consistently than others.  
+* ExtraTreesClassifier performs the worst overall, with lowest accuracy (45%) and F1 score, struggling to correctly classify both classes.  
+* Overall, model performances are modest and close, indicating the task is challenging — possibly due to class imbalance or overlapping features.  
+
+Conclusion: AdaBoost shows slightly better predictive power, but improvements through tuning or data preprocessing are likely needed.
 
 ### 5. Track Quality of Life Outcomes
 **Business Requirement:** Identify variables that impact patient Quality of Life after treatment.
