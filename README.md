@@ -9,7 +9,7 @@ Some of these features are more significant to the survival than others.
 
 For further analysis click on separate pages on right side of dashboard. The pages include general statistics, correlation, predictive model and survival insights
 
-<img src="https://www.freepik.com/free-vector/background-with-blue-ribbon-world-cancer-day_1025520.htm#fromView=keyword&page=1&position=2&uuid=1513264b-4c57-44d0-8405-a02934589786&query=Blue+Cancer+Ribbon" width="100" height="100" />
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS2KjiGSJCiUeeU_uydNp0t-Wc4I7JTwsojg&s" width="100" height="100" />
 
 
 ## Dataset Content
@@ -45,6 +45,9 @@ These are the investigation questions below:
 6. What is the expected survival status for a patients in their 30-45 age group with a normal BMI across different regions?
 
 ## Hypothesis and how to validate?
+
+After data cleanup, all the outliers were removed and i could work with a cleaned, preprocessed dataset
+**Hypothesis 1:**
 * Identify regional disparities in cancer survival rates 
 (1)Is there a statistically significant difference in survival outcomes based on: Cancer type or stage? Country or region? Gender or age group? 
 The dataset contains detailed information about cancer patients, including demographics, diagnosis and treatment dates, 
@@ -66,6 +69,7 @@ cancer type and stage, survival outcomes, and healthcare context. Key columns re
 - Age and Gender impact survival: younger patients and females tend to survive longer on average.
 These trends highlight the importance of early diagnosis, targeted regional policies, and personalized care in improving survival outcomes.
 
+**Hypothesis 2:**
 * Analyze lifestyle factors affecting recurrence & survival 
 (1)How does smoking status or alcohol consumption correlate with recurrence or survival duration?  
 **1. Correlation of Smoking Status and Alcohol Consumption with Recurrence and Survival Duration**
@@ -111,9 +115,68 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 - Comorbidities** such as diabetes and hypertension significantly worsen cancer prognosis, increasing recurrence and reducing survival, especially when multiple comorbidities are present.
 - These findings underscore the importance of addressing modifiable lifestyle factors and managing comorbid conditions as part of comprehensive cancer care.
 
+**Hypothesis 3:**
 * Predict patient outcomes using machine learning models 
 (1)Can we predict a patient’s survival status (Alive vs Deceased) based on clinical and lifestyle factors? 
-we can predict a patient's survival status (Alive vs Deceased) using machine learning classification models trained on clinical and lifestyle data. Features like cancer type, stage, age, comorbidities, smoking status, alcohol use, and treatment delay significantly influence survival. Models such as Random Forest, AdaBoost, and Logistic Regression were applied, with AdaBoost performing best in accuracy (~69%). Though not perfect, these models can support clinical decision-making by identifying high-risk patients early.
+
+# Conclusion
+![Correlation Matrix](reports/Correlation.png)
+**Strong Positive Correlations**  
+* Survival Duration (Months) and SDM_Category: r ≈ 0.75  
+* As survival duration increases, the SDM category (likely categorical bins of survival) increases.  
+* Comorbidities and Proxy_Comorbidity_Score: r ≈ 1.0  
+* These are either the same or very closely related metrics — likely that the proxy score is derived from comorbidity count.  
+* Access_Risk and Urban vs. Rural: r ≈ 0.81  
+* Suggests that access risk is strongly tied to geographic setting — rural areas likely have higher access risk.  
+* Severity_Index and Cancer Stage: r = 1.00  
+Implies perfect mapping; possibly one was derived from the other.  
+* BMI and BMI_Category: r = 0.27 
+
+![Significance](reports/Significance.png)
+
+Assessing statistical differences in survival outcomes based on cancer type, stage,  
+country/region, gender, and age group.  
+
+**Statistical Test Results (Survival Duration as Outcome):**  
+
+Factor	p-value	Interpretation  
+* Cancer Type	0.217 - No significant difference in survival across cancer types.  
+* Cancer Stage	0.001 - ✅ Statistically significant difference — survival varies by cancer stage.  
+* Country	0.131 - No significant difference by country.  
+* Region	0.477 - No significant regional difference.  
+* Gender	0.664 - No significant gender-based survival difference.  
+Age Group	0.448 - No significant difference across age groups.  
+
+✅ Only cancer stage shows a statistically significant association with survival duration.  
+✅ (1) Statistically Significant Survival Differences  
+&emsp;--Cancer Stage is significantly associated with survival duration (p = 0.001).  
+&emsp;--No significant differences were found for cancer type, country, region, gender, or age group.  
+✅ (2) Impact of Early Treatment  
+Very weak correlation (r ≈ 0.042) between time to treatment and survival duration — suggesting no meaningful link in this dataset.  
+
+| Factor           | p-value | Statistically Significant? | Interpretation                                    |
+| ---------------- | ------- | -------------------------- | ------------------------------------------------- |
+| **Cancer Stage** | 0.001   | ✅ Yes                      | Later stages significantly reduce survival.       |
+| Cancer Type      | 0.217   | ❌ No                       | No survival differences by cancer type.           |
+| Country          | 0.131   | ❌ No                       | No survival difference by country.                |
+| Region           | 0.477   | ❌ No                       | No survival difference by region.                 |
+| Gender           | 0.664   | ❌ No                       | Male vs. female survival is similar.              |
+| Age Group        | 0.448   | ❌ No                       | Age group does not significantly affect survival. |
+
+**Hypothesis 1:**  
+- Cancer Stage shows a strong impact on survival: patients diagnosed at early stages live significantly longer.
+- Cancer Type also influences outcomes: some cancers (like breast) have higher survival durations than aggressive ones (like pancreatic).
+- Regional and Country-level differences are visible, suggesting geographic disparities in access or quality of care.
+- Age and Gender impact survival: younger patients and females tend to survive longer on average.
+These trends highlight the importance of early diagnosis, targeted regional policies, and personalized care in improving survival outcomes.
+
+**Hypothesis 2:**    
+- Smoking and alcohol consumption** are both associated with higher cancer recurrence rates and shorter survival durations, with smoking having a stronger negative impact.
+- Comorbidities** such as diabetes and hypertension significantly worsen cancer prognosis, increasing recurrence and reducing survival, especially when multiple comorbidities are present.
+- These findings underscore the importance of addressing modifiable lifestyle factors and managing comorbid conditions as part of comprehensive cancer care.
+
+**Hypothesis 3:**
+- Features like cancer type, stage, age, comorbidities, smoking status, alcohol use, and treatment delay significantly influence survival. Models such as Random Forest, AdaBoost, and Logistic Regression were applied, with AdaBoost performing best in accuracy (~69%). Though not perfect, these models can support clinical decision-making by identifying high-risk patients early.
 
 ## Project Plan
 * Outline the high-level steps taken for the analysis.
@@ -231,19 +294,96 @@ I want to learn project management, deployment using streamlit, cloud based depl
 
 
 ## Deployment
+The master branch of this repository has been used for the deployed version of this application.
+
+### Using Github
+
+To deploy my Data application, I had to use the [Code Institute data analytics Template](https://github.com/Code-Institute-Org/data-analytics-template).
+
+- Click the Use This Template button.
+- Add a repository name and brief description.
+- Click the Create Repository from Template to create your repository.
+- Committing your work should be done often and should have clear/explanatory messages, use the following commands to make your commits:
+	- git add .: adds all modified files to a staging area
+	- git commit -m "A message explaining your commit": commits all changes to a local repository.
+	- git push: pushes all your committed changes to your Github repository.
+
+### Forking the GitHub Repository
+
+By forking the GitHub Repository you will be able to make a copy of the original repository on your own GitHub account allowing you to view and/or make changes without affecting the original repository by using the following steps:
+
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/Code-Institute-Org/data-analytics-template)
+2. At the top of the Repository (not top of page) just above the "Settings" button on the menu, locate the "Fork" button.
+3. You should now have a copy of the original repository in your GitHub account.
+
+### Making a Local Clone
+
+1. Log in to GitHub and locate the GitHub Repository
+2. Under the repository name, click "Clone or download".
+3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
+4. Open command line interface on your computer
+5. Change the current working directory to the location where you want the cloned directory to be made.
+6. Type git clone, and then paste the URL you copied in Step 3.
+7. Press Enter. Your local clone will be created.
+
 The dashboard was saved and viewed in Tableau public
+Steps to Deploy a Dashboard on Tableau Public
+1. Prepare Your Dashboard
+
+Ensure your dashboard is clean, clear, and informative.
+Optimize layout for public viewing (avoid confidential data).
+Test filters, tooltips, and any interactivity.
+
+2. Save as a Packaged Workbook (.twbx)
+
+Go to File > Save As and save your file as a .twbx.
+This format bundles your data and workbook together.
+
+3. Publish to Tableau Public
+
+Click File > Save to Tableau Public As...
+Log in to your Tableau Public account (create one if needed).
+Choose a name for your workbook.
+Click Save – Tableau will upload your dashboard to your Public profile.
+
+4. Share the Dashboard
+
+After publishing, your browser will open to your dashboard.
+Use the Share button (top-right) to:
+Copy the direct link.
+Get an embed code for websites/blogs.
+You can also download or replace the file later.
+
+5. Optional Settings
+
+On your Tableau Public profile:
+Set the dashboard as "featured" if desired.
+Add a description and tags.
+Control visibility (e.g., public or hidden from gallery).
+
+6. Test Your Dashboard
+
+Open the dashboard in a browser.
+Check:
+Interactivity (filters, actions)
+Load speed
+Mobile/tablet responsiveness
+
+Note:
+Tableau Public dashboards are public: Anyone with the link can view it.
+Do not include sensitive or confidential data.
 
 
-## Main Data Analysis Libraries
+### Main Data Analysis Libraries
 * Libraries used: Numpy, Seaborn, Plotly, Matplotlib, Pandas, Scipy.stats, sklearn
 
-    I have used python numpy and pandas library for data cleaning and ETL steps.
-    For data visualization, I have used matplotlib, seaborn and plotly libraries.
-    For Dashboard, I used Tableau.
-    For transformation and encoding, the scikit learn was used.
+I have used python numpy and pandas library for data cleaning and ETL steps.
+For data visualization, I have used matplotlib, seaborn and plotly libraries.
+For Dashboard, I used Tableau.
+For transformation and encoding, the scikit learn was used.
 
 
-## Credits 
+### Credits 
 
 * code institute LMS material.
 * stackoverflow.
@@ -265,7 +405,7 @@ The dashboard was saved and viewed in Tableau public
 
 ### Media
 
-- The European Cancer logo from ().
+- The European Cancer logo from (https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS2KjiGSJCiUeeU_uydNp0t-Wc4I7JTwsojg&s).
 - github for version control - (https://github.com/marcus1989/European_Cancer_Data).
 - European Cancer Dashboard (https://public.tableau.com/app/profile/jacob.ambat/viz/ECD_17497658574600/EuropeanCancerDashboard?publish=yes)
 
