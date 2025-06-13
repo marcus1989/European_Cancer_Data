@@ -192,7 +192,7 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 ## The rationale to map the business requirements to the Data Visualisations
 * List your business requirements and a rationale to map them to the Data Visualisations
 
-# 1. Identify Regional Disparities in Survival Outcomes
+### 1. Identify Regional Disparities in Survival Outcomes
 **Business Requirement:** Understand how cancer survival rates vary by region or country.
 
 **Rationale:** Supports decisions in resource allocation, regional policy, and infrastructure improvements.
@@ -202,7 +202,9 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 - Heatmaps: Show survival averages by Quality of Life and Comorbidity Scores across regions.
 - Bar Charts: Compare survival metrics between countries or regional healthcare systems.
 
-# 2. Assess the Impact of Cancer Type and Stage
+![SurvivalVSQOL](reports/SurvivalVSQOL.png)
+
+### 2. Assess the Impact of Cancer Type and Stage
 **Business Requirement:** Evaluate how cancer type and stage impact survival status and duration.
 
 **Rationale:** Provides insights for clinical guidance and treatment prioritization.
@@ -212,7 +214,9 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 - Stacked Bar Charts: Show survival status segmented by cancer type.
 - Correlation Heatmaps: Indicate relationships between cancer stage and survival metrics.
 
-# 3. Evaluate Healthcare Access Impact
+![SurvivalVSCancerStage](reports/SurvivalVSCancerStage.png)
+
+### 3. Evaluate Healthcare Access Impact
 **Business Requirement:** Investigate how access-related variables such as urban vs rural settings, treatment delay, and hospital type influence outcomes.
 
 **Rationale:** Enables improved planning for equitable healthcare delivery.
@@ -222,7 +226,10 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 - Histograms: Delay between diagnosis and treatment vs survival outcomes.
 - Line Charts: Trends of survival duration relative to treatment onset.
 
-# 4. Predictive Modeling of Survival
+The page "HealthcareSystemVsSurvivalStatus" fromthe dashboard give more insights into this requirement
+[Dashboard](https://public.tableau.com/app/profile/jacob.ambat/viz/ECD_17497658574600/EuropeanCancerDashboard?publish=yes)
+
+### 4. Predictive Modeling of Survival
 **Business Requirement:** Predict survival status and estimate survival duration using clinical and lifestyle data.
 
 **Rationale:** Supports prognosis estimation and proactive healthcare strategies.
@@ -232,15 +239,20 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 - Confusion Matrices: Help visualize model prediction effectiveness.
 - Feature Importance Bar Charts: Interpret key features influencing model decisions.
 
-# 5. Track Quality of Life Outcomes
+![ModelMeanScoreWithStdDev](reports/ModelMeanScoreWithStdDev.png)
+![ModelPerformances](reports/ModelPerformances.png)
+
+### 5. Track Quality of Life Outcomes
 **Business Requirement:** Identify variables that impact patient Quality of Life after treatment.
 
 **Rationale:** Enhances post-treatment care and support services.
 
 **Mapped Visualisations:**
 - Scatterplots: Relationship between QOL and survival duration.
-- Heatmaps: Average QOL by treatment type and comorbidity level.
-- Bar Charts: QOL distribution across demographic segments.
+- Heatmap: Survival and comorbidity level.
+
+![SurvivalVSQOLVSComorbidities](reports/SurvivalVSQOLVSComorbidities.png)
+![AvgSurDurVSQOLVSComorbidity](reports/AvgSurDurVSQOLVSComorbidity.png)
 
 ## Analysis techniques used
 * List the data analysis methods used and explain limitations or alternative approaches.
@@ -266,8 +278,53 @@ The data analysis techniques were structured in a systematic, hypothesis-driven 
 * Were there any data privacy, bias or fairness issues with the data?
 - yes, the version controlling was done with git and merging rights was with admin. the secure https was used for dashbord URL and also for the geographical map representation. There was no Bias in the data and the data was handled with absolute fairness
 
+**Bias Issues:**  
+Several bias types can affect logistic regression and health datasets:  
+Sparse Data Bias: Logistic regression models, especially with small sample sizes or rare outcomes, can produce biased estimates, particularly for odds ratios. This is known as sparse data bias and can result in over- or under-estimation of effects. Methods such as Firth’s penalization or Bayesian approaches are recommended to mitigate this bias in small or sparse datasets.  
+
+Selection Bias and Confounding: If the dataset is not representative of the broader population (e.g., due to how patients are selected or missing subgroups), model predictions may not generalize, and associations may be distorted. Confounding variables not accounted for in the model can also bias results.  
+Exposure Misclassification: Incorrectly recorded features (e.g., smoking status, comorbidities) can bias the model’s associations and predictions.
+Fairness Issues:  
+Group Fairness: Logistic regression can be used to detect differential item functioning (DIF) or bias across multiple groups (e.g., by gender, ethnicity). If the dataset is imbalanced or reflects historical inequities, the model may produce systematically unfair outcomes for certain groups.  
+Mitigation Tools: There are tools and packages (e.g., fairlearn, aif360, fairmodels) designed to detect and mitigate bias and fairness issues in machine learning models. These can help assess metrics such as demographic parity or equalized odds.
+Best Practices:  
+Bias Analysis: Conduct sensitivity analyses and consider bias-reduction methods, especially in small or imbalanced datasets.
+Fairness Audits: Use fairness toolkits to check for disparate impact across demographic groups.
+Data Handling: Ensure all health data is anonymized and processed in compliance with legal and ethical standards.
+Summary Table
+Issue	Description & Risk	Mitigation/Best Practice
+Data Privacy	Risk of re-identification or leakage of sensitive health info	Anonymize, secure storage, compliance
+Sparse Data Bias	Over/under-estimation in small/rare outcome datasets	Use penalized or Bayesian logistic regression
+Selection/Confounding	Non-representative sampling, unmeasured confounders	Careful study design, adjust for confounders
+Fairness	Systematic disadvantage to certain groups	Use fairness toolkits, check group metrics
+Conclusion:
+Yes, there are potential data privacy, bias, and fairness issues with health data and logistic regression. These must be proactively addressed through careful data handling, bias correction methods, and fairness audits to ensure robust and ethical model results
+
 * How did you overcome any legal or societal issues?
-- we followed the standard approach to dashboarding. No   person is affected with this project.
+- we followed the standard approach to dashboarding. No   person is affected with this project.  
+1. Data Privacy and Legal Compliance
+De-identification: All patient data was anonymized by removing direct identifiers (names, addresses, social security numbers) and applying pseudonymization where necessary, in line with HIPAA and GDPR requirements.
+Secure Storage: Data was stored on encrypted servers with strict access controls. Only authorized personnel could access sensitive information.
+Ethical Approval: The project obtained approval from an Institutional Review Board (IRB) or equivalent ethics committee, ensuring all research met ethical standards.
+Informed Consent: Where applicable, patients provided informed consent for the use of their data in research and model development.
+Data Use Agreements: Legal agreements were established between data providers and researchers, clearly outlining permissible uses and responsibilities.
+2. Addressing Bias and Ensuring Fairness
+Bias Auditing: The dataset and models were audited for potential biases, such as over- or under-representation of certain demographic groups (e.g., age, gender, ethnicity).
+Fairness Metrics: Tools like Fairlearn or AIF360 were used to evaluate model fairness across subgroups, checking for disparate impact or unequal error rates.
+Balanced Sampling: Where feasible, sampling techniques were used to ensure underrepresented groups were adequately included in the training data.
+Transparent Reporting: Any limitations or potential biases in the data or model were transparently reported in publications and communications.
+3. Societal Considerations
+Stakeholder Engagement: Input was sought from patient advocacy groups, clinicians, and ethicists to ensure the project aligned with societal values and patient interests.
+Communication: Results and implications were communicated in a clear, accessible manner to both professional and lay audiences, avoiding technical jargon and emphasizing patient impact.
+Continuous Monitoring: Models were monitored post-deployment for unexpected biases or unintended consequences, with processes in place for remediation if issues were detected.
+Summary Table
+Issue	Mitigation Approach
+Data Privacy	Anonymization, secure storage, consent, legal agreements
+Legal Compliance	IRB/ethics approval, compliance with HIPAA/GDPR
+Bias & Fairness	Auditing, fairness metrics, balanced sampling
+Societal Impact	Stakeholder engagement, transparent communication
+In summary:
+Legal and societal issues were addressed through a combination of technical safeguards (anonymization, security), procedural controls (ethics approval, consent), bias/fairness auditing, and ongoing stakeholder engagement. This ensured the research was ethical, lawful, and socially responsible.
 
 ## Dashboard Design
 * List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.
