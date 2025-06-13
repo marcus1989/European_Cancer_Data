@@ -183,7 +183,7 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 - Initially we started with ETL in Jupyter notebook, once the dataset was cleaned we did some initial visualisations to understand realtions between variables and performed statistical tests. Then we loaded the clean dataset into Tableau, to continue to perform interactive visualisations.
 
 * How was the data managed throughout the collection, processing, analysis and interpretation steps?
-- The data was downloaded from kaggle and initially checked for datatypes, columns Age, Gender, Country, regions, cancer types, cancer stage, recurrence, lifestyle factors like BMI, alcohol consumption, smoking status, Quality Of Life (QOL), socioeconomic status, Comorbidities (diabetes, obesity, hypertension)Healthcare systems, treatment type/hospitals/durations were encoded to numerical types and added as new columns. Duplicatea and Unwanted rows were removed. The cleaned data was then saved to csv file which then was opened in Tableau for further analysis and interpretation.
+- The data was downloaded from kaggle and initially checked for datatypes, columns Age, Gender, Country, regions, cancer types, cancer stage, recurrence, lifestyle factors like BMI, alcohol consumption, smoking status, Quality Of Life (QOL), socioeconomic status, Comorbidities (diabetes, obesity, hypertension)Healthcare systems, treatment type/hospitals/durations were encoded to numerical types and added as new columns. Duplicated and Unwanted rows were removed. The cleaned data was then saved to csv file which then was opened in Tableau for further analysis and interpretation.
 
 * Why did you choose the research methodologies you used?
 - We chose the statistical tests to compare the distributions to indicate if survival status varied between cancer stage/type,recurrence(yes/no), Gender (male/female/Non-binary), regions(european countries), treatment and diagnosis, life style features.
@@ -199,10 +199,12 @@ These trends highlight the importance of early diagnosis, targeted regional poli
 
 **Mapped Visualisations:**
 - Plotly Maps: Display survival rates across geographic regions.
-- Heatmaps: Show survival averages by Quality of Life and Comorbidity Scores across regions.
-- Bar Charts: Compare survival metrics between countries or regional healthcare systems.
+- Boxplots: Show survival averages by Quality of Life and Comorbidity Scores across regions.
+- Bar Charts with europe map plot: Compare survival metrics between countries or regional healthcare systems.
 
 ![SurvivalVSQOL](reports/SurvivalVSQOL.png)
+The page "HealthcareSystemVsSurvivalStatus" fromthe dashboard give more insights into this requirement
+[Dashboard](https://public.tableau.com/app/profile/jacob.ambat/viz/ECD_17497658574600/EuropeanCancerDashboard?publish=yes)
 
 ### 2. Assess the Impact of Cancer Type and Stage
 **Business Requirement:** Evaluate how cancer type and stage impact survival status and duration.
@@ -251,7 +253,6 @@ The page "HealthcareSystemVsSurvivalStatus" fromthe dashboard give more insights
 - Scatterplots: Relationship between QOL and survival duration.
 - Heatmap: Survival and comorbidity level.
 
-![SurvivalVSQOLVSComorbidities](reports/SurvivalVSQOLVSComorbidities.png)
 ![AvgSurDurVSQOLVSComorbidity](reports/AvgSurDurVSQOLVSComorbidity.png)
 
 ## Analysis techniques used
@@ -261,6 +262,8 @@ The page "HealthcareSystemVsSurvivalStatus" fromthe dashboard give more insights
 bar charts, scatterplots, line plots and correlation heatmap to understand the personal attribute and Survival status. Statistical testing such as Kruskal–Wallis Test,t-test,Chi-square test,Pearson correlation also provided us with more insight of the distributions when comparing the variables Cancer stage,types, Gender, smoking status, BMI, alcohol consumption, treatment and Healthcare system. Tableau Dashboard was also used for computing bar charts, line charts, number cards, slicers and pie charts.
 
 - Interaction Effects: In Tableau, we used the visualisation tools on our dataset, when we select a value tables, it allows all the visualisations to update and change which makes the experience for the user interactive.
+
+![CancerSurvivalDisparities](reports/CancerSurvivalDisparities.png)
 
 - Predictive Modeling: In Tableau, we used the predictive modelling tool to produce what the next year’s forecast would be in charges for each of the variables. We also produced a visualisation of each variable output sex, age, BMI, children, smoking status and region
 - Cost Optimisation insights: We used Tableau to created visualisations to understand cost optimisations
@@ -275,55 +278,45 @@ The data analysis techniques were structured in a systematic, hypothesis-driven 
 -We used chatGPT, Copilot, Perplexity and Google to understand the data and its features properly and for code optimisation.
 
 ## Ethical considerations
-* Were there any data privacy, bias or fairness issues with the data?
-- yes, the version controlling was done with git and merging rights was with admin. the secure https was used for dashbord URL and also for the geographical map representation. There was no Bias in the data and the data was handled with absolute fairness
+**Were there any data privacy, bias or fairness issues with the data?**  
+* yes, the version controlling was done with git and merging rights was with admin. the secure https was used for dashbord URL and also for the geographical map representation. There was no Bias in the data and the data was handled with absolute fairness
 
 **Bias Issues:**  
-Several bias types can affect logistic regression and health datasets:  
+* Several bias types can affect logistic regression and health datasets:  
 Sparse Data Bias: Logistic regression models, especially with small sample sizes or rare outcomes, can produce biased estimates, particularly for odds ratios. This is known as sparse data bias and can result in over- or under-estimation of effects. Methods such as Firth’s penalization or Bayesian approaches are recommended to mitigate this bias in small or sparse datasets.  
 
-Selection Bias and Confounding: If the dataset is not representative of the broader population (e.g., due to how patients are selected or missing subgroups), model predictions may not generalize, and associations may be distorted. Confounding variables not accounted for in the model can also bias results.  
-Exposure Misclassification: Incorrectly recorded features (e.g., smoking status, comorbidities) can bias the model’s associations and predictions.
+* Selection Bias and Confounding: If the dataset is not representative of the broader population (e.g., due to how patients are selected or missing subgroups), model predictions may not generalize, and associations may be distorted. Confounding variables not accounted for in the model can also bias results.  
+* Exposure Misclassification: Incorrectly recorded features (e.g., smoking status, comorbidities) can bias the model’s associations and predictions.
 Fairness Issues:  
-Group Fairness: Logistic regression can be used to detect differential item functioning (DIF) or bias across multiple groups (e.g., by gender, ethnicity). If the dataset is imbalanced or reflects historical inequities, the model may produce systematically unfair outcomes for certain groups.  
-Mitigation Tools: There are tools and packages (e.g., fairlearn, aif360, fairmodels) designed to detect and mitigate bias and fairness issues in machine learning models. These can help assess metrics such as demographic parity or equalized odds.
-Best Practices:  
-Bias Analysis: Conduct sensitivity analyses and consider bias-reduction methods, especially in small or imbalanced datasets.
-Fairness Audits: Use fairness toolkits to check for disparate impact across demographic groups.
-Data Handling: Ensure all health data is anonymized and processed in compliance with legal and ethical standards.
-Summary Table
-Issue	Description & Risk	Mitigation/Best Practice
-Data Privacy	Risk of re-identification or leakage of sensitive health info	Anonymize, secure storage, compliance
-Sparse Data Bias	Over/under-estimation in small/rare outcome datasets	Use penalized or Bayesian logistic regression
-Selection/Confounding	Non-representative sampling, unmeasured confounders	Careful study design, adjust for confounders
-Fairness	Systematic disadvantage to certain groups	Use fairness toolkits, check group metrics
-Conclusion:
+* Group Fairness: Logistic regression can be used to detect differential item functioning (DIF) or bias across multiple groups (e.g., by gender, ethnicity). If the dataset is imbalanced or reflects historical inequities, the model may produce systematically unfair outcomes for certain groups.  
+* Mitigation Tools: There are tools and packages (e.g., fairlearn, aif360, fairmodels) designed to detect and mitigate bias and fairness issues in machine learning models. These can help assess metrics such as demographic parity or equalized odds.
+**Best Practices:**   
+** Bias Analysis: Conduct sensitivity analyses and consider bias-reduction methods, especially in small or imbalanced datasets.
+* Fairness Audits: Use fairness toolkits to check for disparate impact across demographic groups.
+* Data Handling: Ensure all health data is anonymized and processed in compliance with legal and ethical standards.
+
+**Conclusion:**  
 Yes, there are potential data privacy, bias, and fairness issues with health data and logistic regression. These must be proactively addressed through careful data handling, bias correction methods, and fairness audits to ensure robust and ethical model results
 
-* How did you overcome any legal or societal issues?
-- we followed the standard approach to dashboarding. No   person is affected with this project.  
+**How did you overcome any legal or societal issues?**  
+we followed the standard approach to dashboarding. No   person is affected with this project.  
 1. Data Privacy and Legal Compliance
-De-identification: All patient data was anonymized by removing direct identifiers (names, addresses, social security numbers) and applying pseudonymization where necessary, in line with HIPAA and GDPR requirements.
-Secure Storage: Data was stored on encrypted servers with strict access controls. Only authorized personnel could access sensitive information.
-Ethical Approval: The project obtained approval from an Institutional Review Board (IRB) or equivalent ethics committee, ensuring all research met ethical standards.
-Informed Consent: Where applicable, patients provided informed consent for the use of their data in research and model development.
-Data Use Agreements: Legal agreements were established between data providers and researchers, clearly outlining permissible uses and responsibilities.
+De-identification: All patient data was anonymized by removing direct identifiers (names, addresses, social security numbers) and applying pseudonymization where necessary, in line with HIPAA and GDPR requirements.  
+* Secure Storage: Data was stored on encrypted servers with strict access controls. Only authorized personnel could access sensitive information.  
+* Ethical Approval: The project obtained approval from an Institutional Review Board (IRB) or equivalent ethics committee, ensuring all research met ethical standards.  
+* Informed Consent: Where applicable, patients provided informed consent for the use of their data in research and model development.  
+* Data Use Agreements: Legal agreements were established between data providers and researchers, clearly outlining permissible uses and responsibilities.  
 2. Addressing Bias and Ensuring Fairness
-Bias Auditing: The dataset and models were audited for potential biases, such as over- or under-representation of certain demographic groups (e.g., age, gender, ethnicity).
-Fairness Metrics: Tools like Fairlearn or AIF360 were used to evaluate model fairness across subgroups, checking for disparate impact or unequal error rates.
-Balanced Sampling: Where feasible, sampling techniques were used to ensure underrepresented groups were adequately included in the training data.
+* Bias Auditing: The dataset and models were audited for potential biases, such as over- or under-representation of certain demographic groups (e.g., age, gender, ethnicity).  
+* Fairness Metrics: Tools like Fairlearn or AIF360 were used to evaluate model fairness across subgroups, checking for disparate impact or unequal error rates.  
+* Balanced Sampling: Where feasible, sampling techniques were used to ensure underrepresented groups were adequately included in the training data.
 Transparent Reporting: Any limitations or potential biases in the data or model were transparently reported in publications and communications.
-3. Societal Considerations
-Stakeholder Engagement: Input was sought from patient advocacy groups, clinicians, and ethicists to ensure the project aligned with societal values and patient interests.
-Communication: Results and implications were communicated in a clear, accessible manner to both professional and lay audiences, avoiding technical jargon and emphasizing patient impact.
-Continuous Monitoring: Models were monitored post-deployment for unexpected biases or unintended consequences, with processes in place for remediation if issues were detected.
-Summary Table
-Issue	Mitigation Approach
-Data Privacy	Anonymization, secure storage, consent, legal agreements
-Legal Compliance	IRB/ethics approval, compliance with HIPAA/GDPR
-Bias & Fairness	Auditing, fairness metrics, balanced sampling
-Societal Impact	Stakeholder engagement, transparent communication
-In summary:
+3. Societal Considerations  
+* Stakeholder Engagement: Input was sought from patient advocacy groups, clinicians, and ethicists to ensure the project aligned with societal values and patient interests.  
+* Communication: Results and implications were communicated in a clear, accessible manner to both professional and lay audiences, avoiding technical jargon and emphasizing patient impact.  
+* Continuous Monitoring: Models were monitored post-deployment for unexpected biases or unintended consequences, with processes in place for remediation if issues were detected.
+
+In summary:  
 Legal and societal issues were addressed through a combination of technical safeguards (anonymization, security), procedural controls (ethics approval, consent), bias/fairness auditing, and ongoing stakeholder engagement. This ensured the research was ethical, lawful, and socially responsible.
 
 ## Dashboard Design
